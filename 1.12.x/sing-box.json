@@ -1,21 +1,27 @@
 {
+  "log": {
+    "disabled": false,
+    "level": "error",
+    "timestamp": true
+  },
+
+
   "dns": {
     "servers": [
-      { "tag": "google", "type": "https", "server": "8.8.8.8", "detour": "🔗 默认代理" },
-      { "tag": "ali",    "type": "quic",  "server": "223.5.5.5" },
+      { "tag": "adgh",   "type": "udp", "server": "182.92.122.107", "server_port": 1053 },
       { "tag": "fakeip", "type": "fakeip","inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
     ],
     "rules": [
-      { "clash_mode": "direct", "action": "route", "server": "ali" },
+      { "clash_mode": "direct", "action": "route", "server": "adgh" },
       { "clash_mode": "Global", "action": "route", "server": "fakeip" },
       { "query_type": "HTTPS",  "action": "reject" },
       { "query_type": ["A", "AAAA"], "action": "route", "server": "fakeip", "rewrite_ttl": 1 }
     ],
-    "final": "google",
+    "final": "adgh",
     "independent_cache": true
   },
   "route": {
-    "default_domain_resolver": { "server": "ali" },
+    "default_domain_resolver": { "server": "adgh" },
     "rules": [
       {
         "action": "sniff",
@@ -36,21 +42,17 @@
       
       { "clash_mode": "Global", "action": "route", "outbound": "GLOBAL" },
       { "clash_mode": "direct", "action": "route", "outbound": "direct" },
-
-
-      { "rule_set": "private_domain",        "action": "route", "outbound": "direct" },
       { "rule_set": "steam@cn_domain",       "action": "route", "outbound": "direct" },
       { "rule_set": "googlefcm_domain",      "action": "route", "outbound": "direct" },
       { "rule_set": "category-ai-cn_domain", "action": "route", "outbound": "direct" },
       { "rule_set": "category-ai-!cn_domain","action": "route", "outbound": "💬 智能助理" },
+      { "rule_set": "google-play_domain",    "action": "route", "outbound": "🔗 默认代理" },
       { "rule_set": "bing_domain",           "action": "route", "outbound": "🔗 默认代理" },
       { "rule_set": "github_domain",         "action": "route", "outbound": "🔗 默认代理" },
       { "rule_set": "youtube_domain",        "action": "route", "outbound": "📹 油管视频" },
       { "rule_set": "microsoft_domain",      "action": "route", "outbound": "direct" },
-      { "rule_set": "cn_domain",             "action": "route", "outbound": "direct" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain"],"action": "route", "outbound": "📲 电报消息" },
-      { "rule_set": [ "google_ip", "google_domain"  ],  "action": "route", "outbound": "🔗 默认代理" },
       { "rule_set": [ "private_ip", "private_domain"],  "action": "route", "outbound": "direct" },
       { "rule_set": [ "cn_ip", "cn_domain" ],           "action": "route", "outbound": "direct" }
     ],
@@ -60,113 +62,91 @@
         "tag": "private_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs"
       },
       {
         "tag": "cn_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
       },
       {
         "tag": "steam@cn_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/steam@cn.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/steam@cn.srs"
       },
       {
         "tag": "googlefcm_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs"
       },
       {
         "tag": "microsoft_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs"
       },
       {
         "tag": "category-ai-cn_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-cn.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-cn.srs"
       },
       {
         "tag": "category-ai-!cn_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs"
       },
       {
         "tag": "bing_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs"
       },
       {
         "tag": "github_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs"
       },
       {
         "tag": "youtube_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs"
       },
       {
         "tag": "telegram_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs"
       },
       {
-        "tag": "google_domain",
+        "tag": "google-play_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs"
       },
       {
         "tag": "private_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
-        "download_detour": "🔗 默认代理"
-      },
-      {
-        "tag": "google_ip",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"
       },
       {
         "tag": "telegram_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
-        "download_detour": "🔗 默认代理"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"
       }
     ],
     "final": "🔗 默认代理",
@@ -198,6 +178,12 @@
       "type": "selector",
       "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
       "default": "🇺🇸 手动选择"
+    },
+    {
+      "tag": "Global",
+      "type": "selector",
+      "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
+      "default": "🇭🇰 自动选择"
     },
     {"tag":"🇭🇰 手动选择","type":"selector","outbounds":[]},
     {"tag":"🇸🇬 手动选择","type":"selector","outbounds":[]},
@@ -238,17 +224,11 @@
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
-      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "🔗 默认代理"
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
     },
     "cache_file": {
       "enabled": true,
       "store_fakeip": true
     }
-  },
-  "log": {
-    "disabled": false,
-    "level": "info",
-    "timestamp": true
   }
 }
