@@ -5,15 +5,12 @@
     "timestamp": true
   },
 
-
   "dns": {
     "servers": [
       { "tag": "mosdns", "type": "udp", "server": "182.92.122.107", "server_port": 1053 },
       { "tag": "fakeip", "type": "fakeip","inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
     ],
     "rules": [
-      { "clash_mode": "Direct", "action": "route", "server": "mosdns" },
-      { "clash_mode": "Global", "action": "route", "server": "fakeip" },
       { "query_type": "HTTPS",  "action": "reject" },
       { "query_type": ["A", "AAAA"], "action": "route", "server": "fakeip", "rewrite_ttl": 1 }
     ],
@@ -29,18 +26,20 @@
       { "ip_is_private": true, "outbound": "direct" },
       { "type": "logical", "mode": "or", "rules": [ { "port": 853 }, { "network": "udp", "port": 443 }, { "protocol": "stun" } ], "action": "reject" },
 
-      { "clash_mode": "Global",              "outbound": "GLOBAL" },
-      { "clash_mode": "Direct",              "outbound": "DIRECT" },
-      { "rule_set": "steam@cn_domain",       "outbound": "direct" },
-      { "rule_set": "googlefcm_domain",      "outbound": "direct" },
-      { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
-      { "rule_set": "category-ai-cn_domain", "outbound": "direct" },
+      { "rule_set": "steam@cn_domain",       "outbound": "DIRECT" },
+      { "rule_set": "googlefcm_domain",      "outbound": "DIRECT" },
+      { "rule_set": "category-ai-cn_domain", "outbound": "DIRECT" },
       { "rule_set": "category-ai-!cn_domain","outbound": "💬 智能助理" },
+      { "rule_set": "bing_domain",           "outbound": "🔗 默认代理" },
       { "rule_set": "google-play_domain",    "outbound": "🔗 默认代理" },
+      { "rule_set": "github_domain",         "outbound": "🔗 默认代理" },
       { "rule_set": "youtube_domain",        "outbound": "📹 油管视频" },
+      { "rule_set": "microsoft_domain",      "outbound": "DIRECT" },
+
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ],"outbound": "📲 电报消息" },
-      { "rule_set": [ "cn_ip", "cn_domain" ],            "outbound": "direct" }
+      { "rule_set": [ "netflix_ip", "netflix_domain" ],  "outbound": "🎥 奈飞视频" },
+      { "rule_set": [ "cn_ip", "cn_domain" ],            "outbound": "DIRECT" }
     ],
 
     "rule_set": [
@@ -63,10 +62,10 @@
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs"
       },
       {
-        "tag": "microsoft@cn_domain",
+        "tag": "microsoft_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs"
       },
       {
         "tag": "category-ai-cn_domain",
@@ -81,22 +80,40 @@
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs"
       },
       {
+        "tag": "bing_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs"
+      },
+      {
+        "tag": "github_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs"
+      },
+      {
         "tag": "youtube_domain",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs"
       },
       {
-        "tag": "telegram_domain",
+        "tag": "netflix_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs"
       },
       {
         "tag": "google-play_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs"
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-play.srs"
+      },
+      {
+        "tag": "telegram_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs"
       },
       {
         "tag": "cn_ip",
@@ -109,6 +126,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"
+      },
+      {
+        "tag": "netflix_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs",
+        "download_detour": "direct"
       }
     ],
     "final": "🔗 默认代理",
@@ -118,48 +142,101 @@
 
   "outbounds": [
     {
+      "tag": "✈️ 节点总览",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
       "tag": "🔗 默认代理",
       "type": "selector",
-      "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
-      "default": "🇭🇰 自动选择"
+      "outbounds": [ "direct", "🇭🇰 香港", "🇹🇼 台湾","🇯🇵 日本", "🇸🇬 新加坡", "🇺🇸 美国" ],
+      "default": "🇭🇰 香港"
     },
     {
       "tag": "📲 电报消息",
       "type": "selector",
-      "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
-      "default": "🇸🇬 自动选择"
+      "outbounds": [ "direct", "🇭🇰 香港", "🇹🇼 台湾","🇯🇵 日本", "🇸🇬 新加坡", "🇺🇸 美国" ],
+      "default": "🇸🇬 新加坡"
     },
     {
       "tag": "📹 油管视频",
       "type": "selector",
-      "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
-      "default": "🇺🇸 自动选择"
+      "outbounds": [ "direct", "🇭🇰 香港", "🇹🇼 台湾","🇯🇵 日本", "🇸🇬 新加坡", "🇺🇸 美国" ],
+      "default": "🇺🇸 美国"
+    },
+    {
+      "tag": "🎥 奈飞视频",
+      "type": "selector",
+      "outbounds": [ "direct", "🇭🇰 香港", "🇹🇼 台湾","🇯🇵 日本", "🇸🇬 新加坡", "🇺🇸 美国" ],
+      "default": "🇺🇸 美国"
     },
     {
       "tag": "💬 智能助理",
       "type": "selector",
-      "outbounds": ["direct", "reject", "🇭🇰 自动选择", "🇭🇰 手动选择", "🇸🇬 自动选择", "🇸🇬 手动选择", "🇺🇸 自动选择", "🇺🇸 手动选择"],
-      "default": "🇺🇸 自动选择"
+      "outbounds": [ "direct", "🇭🇰 香港", "🇹🇼 台湾","🇯🇵 日本", "🇸🇬 新加坡", "🇺🇸 美国" ],
+      "default":   "🇺🇸 美国"
     },
-    {"tag":"🇭🇰 自动选择","type":"urltest","outbounds":[]},
-    {"tag":"🇸🇬 自动选择","type":"urltest","outbounds":[]},
-    {"tag":"🇺🇸 自动选择","type":"urltest","outbounds":[]},
-    {"tag":"🇭🇰 手动选择","type":"selector","outbounds":[]},
-    {"tag":"🇸🇬 手动选择","type":"selector","outbounds":[]},
-    {"tag":"🇺🇸 手动选择","type":"selector","outbounds":[]},
-    {"tag": "direct",   "type":"direct"},
-    {"tag": "reject",   "type":"block" }
-
+    {
+      "tag": "🇭🇰 香港", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇹🇼 台湾", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇯🇵 日本", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇸🇬 新加坡", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇺🇸 美国", "type": "urltest", "outbounds": []
+    }
   ],
 
 
   "inbounds": [
     {
       "type": "tun",
+      "interface_name": "singbox",
+      "address": [
+        "172.19.0.0/30",
+        "fdfe:dcba:9876::0/126"
+      ],
       "auto_route": true,
       "strict_route": true,
-      "address": [ "172.19.0.0/30", "fdfe:dcba:9876::0/126" ],
-      "platform": { "http_proxy": { "enabled": true, "server": "127.0.0.1", "server_port": 7890 } }
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890,
+          "bypass_domain": [
+            "localhost",
+            "127.*",
+            "10.*",
+            "172.16.*",
+            "172.17.*",
+            "172.18.*",
+            "172.19.*",
+            "172.20.*",
+            "172.21.*",
+            "172.22.*",
+            "172.23.*",
+            "172.24.*",
+            "172.25.*",
+            "172.26.*",
+            "172.27.*",
+            "172.28.*",
+            "172.29.*",
+            "172.30.*",
+            "172.31.*",
+            "192.168.*",
+            "+.lan",
+            "+.local",
+            "+.msftconnecttest.com",
+            "+.msftncsi.com"
+          ]
+        }
+      }
     },
     {
       "type": "mixed",

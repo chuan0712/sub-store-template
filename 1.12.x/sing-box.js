@@ -16,13 +16,22 @@ let proxies = await produceArtifact({
 config.outbounds.push(...proxies)
 
 config.outbounds.map(i => {
-  if (["🇭🇰 自动选择", "🇭🇰 手动选择"].includes(i.tag)) {
+  if (['✈️ 节点总览'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies))
+  }
+  if (['🇭🇰 香港'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /港|hk|hongkong|kong kong|🇭🇰/i))
   }
-  if (["🇸🇬 自动选择", "🇸🇬 手动选择"].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /新|sg|singapore|🇸🇬/i))
+  if (['🇹🇼 台湾'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /台|tw|taiwan|🇹🇼/i))
   }
-  if (["🇺🇸 自动选择", "🇺🇸 手动选择"].includes(i.tag)) {
+  if (['🇯🇵 日本'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /日|jp|japan|🇯🇵/i))
+  }
+  if (['🇸🇬 新加坡'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /新|sg|singapore|🇸🇬)/i))
+  }
+  if (['🇺🇸 美国'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /美|us|unitedstates|united states|🇺🇸/i))
   }
 })
