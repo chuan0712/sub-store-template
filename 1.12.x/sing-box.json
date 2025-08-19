@@ -142,6 +142,10 @@
 
   "outbounds": [
     {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
       "tag": "✈️ 节点总览",
       "type": "selector",
       "outbounds": []
