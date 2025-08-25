@@ -1,10 +1,4 @@
 {
-  "log": {
-    "disabled": false,
-    "level": "error",
-    "timestamp": true
-  },
-
   "dns": {
     "servers": [
       { "tag": "mosdns", "type": "udp", "server": "182.92.122.107", "server_port": 1053 },
@@ -21,9 +15,9 @@
   },
 
   "route": {
-    "default_domain_resolver": "mosdns",
+    "default_domain_resolver": { "server": "mosdns" },
     "rules": [
-      { "action": "sniff" },
+      { "action": "sniff", "sniffer": [ "http", "tls", "quic", "dns" ], "timeout": "500ms" },
       { "type": "logical", "mode": "or", "rules": [ { "port": 53  }, { "protocol": "dns" } ], "action": "hijack-dns" },
       { "ip_is_private": true, "outbound": "direct" },
       { "type": "logical", "mode": "or", "rules": [ { "port": 853 }, { "network": "udp", "port": 443 }, { "protocol": "stun" } ], "action": "reject" },
@@ -31,39 +25,32 @@
       { "clash_mode": "Direct",              "outbound": "direct" },
       { "rule_set": "steam@cn_domain",       "outbound": "direct" },
       { "rule_set": "googlefcm_domain",      "outbound": "direct" },
+      { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
       { "rule_set": "category-ai-cn_domain", "outbound": "direct" },
       { "rule_set": "category-ai-!cn_domain","outbound": "💬 智能助理" },
-      { "rule_set": "bing_domain",           "outbound": "🔗 默认代理" },
-      { "rule_set": "github_domain",         "outbound": "🔗 默认代理" },
-      { "rule_set": "google-play_domain",    "outbound": "🔗 默认代理" },
       { "rule_set": "youtube_domain",        "outbound": "📹 油管视频" },
-      { "rule_set": "microsoft_domain",      "outbound": "direct" },
-
+      { "rule_set": "onedrive_domain",       "outbound": "☁️ 微软云盘" },
+      { "domain_suffix": "googleapis.cn",    "outbound": "🔗 默认代理" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ],"outbound": "📲 电报消息" },
-      { "rule_set": [ "netflix_ip", "netflix_domain" ],  "outbound": "🎥 奈飞视频" },
       { "rule_set": [ "private_ip", "private_domain" ],  "outbound": "direct" },
       { "rule_set": [ "cn_ip", "cn_domain" ],            "outbound": "direct" }
     ],
 
     "rule_set": [
-      { "tag": "cn_domain",              "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
-      { "tag": "private_domain",         "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs"},
-      { "tag": "steam@cn_domain",        "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/steam@cn.srs" },
-      { "tag": "googlefcm_domain",       "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs" },
-      { "tag": "microsoft_domain",       "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs" },
-      { "tag": "category-ai-cn_domain",  "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-cn.srs" },
-      { "tag": "category-ai-!cn_domain", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs" },
-      { "tag": "youtube_domain",         "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
-      { "tag": "netflix_domain",         "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs" },
-      { "tag": "bing_domain",            "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bing.srs" },
-      { "tag": "github_domain",          "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs" },
-      { "tag": "telegram_domain",        "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
-      { "tag": "google-play_domain",     "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-play.srs" },
-      { "tag": "telegram_ip",            "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
-      { "tag": "netflix_ip",             "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs" },
-      { "tag": "private_ip",             "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs" },
-      { "tag": "cn_ip",                  "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
+      { "tag": "cn_domain",             "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs" },
+      { "tag": "private_domain",        "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs" },
+      { "tag": "steam@cn_domain",       "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam@cn.srs" },
+      { "tag": "googlefcm_domain",      "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/googlefcm.srs" },
+      { "tag": "microsoft@cn_domain",   "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft@cn.srs" },
+      { "tag": "category-ai-cn_domain", "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-cn.srs" },
+      { "tag": "category-ai-!cn_domain","type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-!cn.srs" },
+      { "tag": "youtube_domain",        "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs" },
+      { "tag": "onedrive_domain",       "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs" },
+      { "tag": "telegram_domain",       "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs" },
+      { "tag": "telegram_ip",           "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs" },
+      { "tag": "private_ip",            "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs" },
+      { "tag": "cn_ip",                 "type": "remote", "format": "binary", "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs" }
     ],
     "final": "🔗 默认代理",
     "auto_detect_interface": true
@@ -99,10 +86,10 @@
       "default": "🇺🇸 美国"
     },
     {
-      "tag": "🎥 奈飞视频",
+      "tag": "☁️ 微软云盘",
       "type": "selector",
       "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ],
-      "default": "🇺🇸 美国"
+      "default": "direct"
     },
     {
       "tag": "💬 智能助理",
@@ -127,51 +114,22 @@
     }
   ],
 
+  "log": {
+    "disabled": false,
+    "level": "warn"
+  },
 
   "inbounds": [
     {
-      "type": "mixed",
-      "listen": "127.0.0.1",
-      "listen_port": 7890
+      "type": "mixed", "listen": "127.0.0.1", "listen_port": 7890
     },
     {
       "type": "tun",
-      "interface_name": "SING_BOX",
-      "address": [
-        "172.19.0.0/30",
-        "fdfe:dcba:9876::0/126"
-      ],
       "auto_route": true,
       "strict_route": true,
-      "platform": {
-        "http_proxy": {
-          "enabled": true,
-          "server": "127.0.0.1",
-          "server_port": 7890,
-          "bypass_domain": [
-            "localhost",
-            "127.*",
-            "192.168.*",
-            "10.*",
-            "172.16.*",
-            "172.17.*",
-            "172.18.*",
-            "172.19.*",
-            "172.20.*",
-            "172.21.*",
-            "172.22.*",
-            "172.23.*",
-            "172.24.*",
-            "172.25.*",
-            "172.26.*",
-            "172.27.*",
-            "172.28.*",
-            "172.29.*",
-            "172.30.*",
-            "172.31.*"
-          ]
-        }
-      }
+      "interface_name": "singbox",
+      "address": [ "172.19.0.0/30", "fdfe:dcba:9876::0/126" ],
+      "platform": { "http_proxy": { "enabled": true, "server": "127.0.0.1", "server_port": 7890 } }
     }
   ],
 
