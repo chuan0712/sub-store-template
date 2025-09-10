@@ -66,10 +66,10 @@
       "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇭🇰 香港"
     },
     {
-      "tag": "💬 智能助理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国"
+      "tag": "📲 电报消息", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇸🇬 新加坡"
     },
     {
-      "tag": "📲 电报消息", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇸🇬 新加坡"
+      "tag": "💬 智能助理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国"
     },
     {
       "tag": "📹 油管视频", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国"
@@ -99,6 +99,7 @@
   "log": {
     "disabled": false,
     "level": "error",
+    "output": "box.log",
     "timestamp": true
   },
 
@@ -110,8 +111,7 @@
       "type": "tun",
       "interface_name": "singbox",
       "address": [
-        "172.19.0.0/30",
-        "fdfe:dcba:9876::0/126"
+        "172.19.0.0/30"
       ],
       "mtu": 9000,
       "auto_route": true,
