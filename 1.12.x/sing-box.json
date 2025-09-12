@@ -5,8 +5,6 @@
       { "tag": "fakeip", "type": "fakeip","inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
     ],
     "rules": [
-      { "clash_mode": "Direct", "server": "mosdns" },
-      { "clash_mode": "Global", "server": "fakeip" },
       { "query_type": "HTTPS",  "action": "reject" },
       { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1 }
     ],
@@ -15,7 +13,6 @@
   },
 
   "route": {
-    "default_domain_resolver": { "server": "mosdns" },
     "rules": [
       { "action": "sniff", "sniffer": [ "http", "tls", "quic", "dns" ], "timeout": "500ms" },
       { "type": "logical", "mode": "or", "rules": [ { "port": 53  }, { "protocol": "dns" } ], "action": "hijack-dns" },
@@ -33,9 +30,9 @@
       { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "📲 电报消息" },
-      { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" }
+      { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" },
+      { "network":  [ "icmp" ], "outbound": "direct" }
     ],
-
     "rule_set": [
       { "tag": "cn_domain",               "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
       { "tag": "games@cn_domain",         "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs" },
@@ -50,6 +47,7 @@
       { "tag": "cn_ip",                   "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
     ],
     "final": "🔗 默认代理",
+    "default_domain_resolver": "mosdns",
     "auto_detect_interface": true
 },
 
@@ -113,10 +111,8 @@
       "address": [
         "172.19.0.0/30"
       ],
-      "mtu": 9000,
       "auto_route": true,
       "strict_route": true,
-      "stack": "mixed",
       "route_exclude_address": [ "192.168.0.0/16", "fc00::/7" ],
       "platform": { "http_proxy": { "enabled": true, "server": "127.0.0.1", "server_port": 7890 } }
     }
