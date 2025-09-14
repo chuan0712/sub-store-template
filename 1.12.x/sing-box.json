@@ -54,8 +54,8 @@
 
   "outbounds": [
     {
-      "tag": "direct",
-      "type": "direct"
+      "type": "direct",
+      "tag": "direct"
     },
     {
       "tag": "✈️ 节点总览", "type": "selector", "outbounds": []
