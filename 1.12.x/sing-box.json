@@ -27,6 +27,7 @@
       { "rule_set": "tiktok_domain",         "outbound": "🎵 海外抖音" },
       { "rule_set": "bing_domain",           "outbound": "🔗 默认代理" },
       { "rule_set": "github_domain",         "outbound": "📦 代码托管" },
+      { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "rule_set": "microsoft_domain",      "outbound": "direct" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "📲 电报消息" },
