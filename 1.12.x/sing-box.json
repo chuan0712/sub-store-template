@@ -28,13 +28,14 @@
       { "rule_set": "games@cn_domain",       "outbound": "direct" },
       { "rule_set": "googlefcm_domain",      "outbound": "direct" },
       { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
-      { "rule_set": "category-ai-!cn_domain","outbound": "💬 智能助理" },
-      { "rule_set": "youtube_domain",        "outbound": "📹 油管视频" },
-      { "rule_set": "tiktok_domain",         "outbound": "🎵 海外抖音" },
-      { "rule_set": "github_domain",         "outbound": "📦 代码托管" },
+      { "rule_set": "category-ai-!cn_domain","outbound": "🇺🇸 美国" },
+      { "rule_set": "youtube_domain",        "outbound": "🇺🇸 美国" },
+      { "rule_set": "tiktok_domain",         "outbound": "🇺🇸 美国" },
+      { "rule_set": "github_domain",         "outbound": "🇸🇬 狮城" },
+      { "rule_set": "onedrive_domain",       "outbound": "☁️ 微软云盘" },
       { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "action": "resolve" },
-      { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "📲 电报消息" },
+      { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "🇸🇬 狮城" },
       { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" },
       { "network":  [ "icmp" ],               "outbound": "direct" }
     ],
@@ -47,6 +48,7 @@
       { "tag": "youtube_domain",        "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
       { "tag": "tiktok_domain",         "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
       { "tag": "github_domain",         "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs" },
+      { "tag": "onedrive_domain",       "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
       { "tag": "telegram_domain",       "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
       { "tag": "telegram_ip",           "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
       { "tag": "cn_ip",                 "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
@@ -62,11 +64,7 @@
     },
     { "tag": "✈️ 节点总览", "type": "selector", "outbounds": [] },
     { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
-    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇸🇬 新加坡" },
-    { "tag": "💬 智能助理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国" },
-    { "tag": "📹 油管视频", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国" },
-    { "tag": "🎵 海外抖音", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇺🇸 美国" },
-    { "tag": "📦 代码托管", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇸🇬 新加坡" },
+    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "direct" },
     {
       "tag": "GLOBAL",
       "type": "selector",
@@ -98,7 +96,8 @@
       "type": "tun",
       "interface_name": "singbox",
       "address": [
-        "172.19.0.0/30"
+        "172.19.0.0/30",
+        "fdfe:dcba:9876::1/126"
       ],
       "auto_route": true,
       "strict_route": true,
