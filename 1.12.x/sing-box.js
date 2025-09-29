@@ -20,19 +20,19 @@ config.outbounds.map(i => {
     i.outbounds.push(...getTags(proxies))
   }
   if (['🇭🇰 香港'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /港|hk|hongkong|kong kong|🇭🇰/i))
+    i.outbounds.push(...getTags(proxies, /港|HK|Hong|🇭🇰/i))
   }
   if (['🇹🇼 台湾'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /台|tw|taiwan|🇹🇼/i))
+    i.outbounds.push(...getTags(proxies, /台|TW|Taiwan|🇹🇼/i))
   }
   if (['🇯🇵 日本'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /日|jp|japan|🇯🇵/i))
+    i.outbounds.push(...getTags(proxies, /日|JP|Japan|🇯🇵/i))
   }
   if (['🇸🇬 狮城','🇸🇬 新加坡'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /新|sg|singapore|🇸🇬/i))
+    i.outbounds.push(...getTags(proxies, /新|SG|Singapore|🇸🇬/i))
   }
   if (['🇺🇸 美国'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /美|us|unitedstates|united states|🇺🇸/i))
+    i.outbounds.push(...getTags(proxies, /美|US|United States|🇺🇸/i))
   }
 })
 
