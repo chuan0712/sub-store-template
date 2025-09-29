@@ -1,8 +1,22 @@
 {
   "dns": {
     "servers": [
-      { "tag": "mosdns", "type": "udp", "server": "182.92.122.107", "server_port": 1053 },
-      { "tag": "fakeip", "type": "fakeip","inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" }
+      {
+        "type": "https",
+        "tag": "mosdns",
+        "server": "adgh.7773000.xyz",
+        "domain_resolver": "hosts"
+      },
+      {
+        "type": "fakeip",
+        "tag": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      },
+      {
+        "type": "hosts",
+        "tag": "hosts",
+        "predefined": { "adgh.7773000.xyz": [ "182.92.122.107", "2408:400a:6e:ba00:648c:4e22:f1d7:1d30" ] } }
     ],
     "rules": [
       { "query_type": "HTTPS",  "action": "reject" },
@@ -40,18 +54,18 @@
       { "network":  [ "icmp" ],               "outbound": "direct" }
     ],
     "rule_set": [
-      { "tag": "cn_domain",             "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
-      { "tag": "games@cn_domain",       "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs" },
-      { "tag": "googlefcm_domain",      "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs" },
-      { "tag": "microsoft@cn_domain",   "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs" },
-      { "tag": "category-ai-!cn_domain","type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs" },
-      { "tag": "youtube_domain",        "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
-      { "tag": "tiktok_domain",         "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
-      { "tag": "github_domain",         "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs" },
-      { "tag": "onedrive_domain",       "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
-      { "tag": "telegram_domain",       "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
-      { "tag": "telegram_ip",           "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
-      { "tag": "cn_ip",                 "type": "remote", "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
+      { "type": "remote", "tag": "cn_domain",             "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
+      { "type": "remote", "tag": "games@cn_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs" },
+      { "type": "remote", "tag": "googlefcm_domain",      "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs" },
+      { "type": "remote", "tag": "microsoft@cn_domain",   "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs" },
+      { "type": "remote", "tag": "category-ai-!cn_domain","download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs" },
+      { "type": "remote", "tag": "youtube_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
+      { "type": "remote", "tag": "tiktok_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
+      { "type": "remote", "tag": "github_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs" },
+      { "type": "remote", "tag": "onedrive_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
+      { "type": "remote", "tag": "telegram_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
+      { "type": "remote", "tag": "telegram_ip",           "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
+      { "type": "remote", "tag": "cn_ip",                 "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
     ],
     "final": "🔗 默认代理",
     "default_domain_resolver": "mosdns",
@@ -59,22 +73,22 @@
   },
   "outbounds": [
     {
-      "type": "direct",
-      "tag": "direct"
+      "tag": "direct",
+      "type": "direct"
     },
     { "tag": "✈️ 节点总览", "type": "selector", "outbounds": [] },
-    { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
-    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "direct" },
+    { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
+    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "direct" },
     {
       "tag": "GLOBAL",
       "type": "selector",
-      "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 新加坡", "🇺🇸 美国" ], "default": "🇭🇰 香港"
+      "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港"
     },
     {
       "tag": "🇭🇰 香港", "type": "urltest", "outbounds": []
     },
     {
-      "tag": "🇸🇬 新加坡", "type": "urltest", "outbounds": []
+      "tag": "🇸🇬 狮城", "type": "urltest", "outbounds": []
     },
     {
       "tag": "🇺🇸 美国", "type": "urltest", "outbounds": []
@@ -94,11 +108,12 @@
     },
     {
       "type": "tun",
+      "tag": "tun-in",
       "interface_name": "singbox",
       "address": [
-        "172.19.0.0/30",
-        "fdfe:dcba:9876::1/126"
+        "172.19.0.0/30"
       ],
+      "mtu": 1500,
       "auto_route": true,
       "strict_route": true,
       "route_exclude_address": [ "192.168.0.0/16", "fc00::/7" ],
