@@ -2,21 +2,16 @@
   "dns": {
     "servers": [
       {
-        "type": "https",
+        "type": "udp",
         "tag": "mosdns",
-        "server": "adgh.7773000.xyz",
-        "domain_resolver": "hosts"
+        "server": "182.92.122.107",
+        "server_port": 1053
       },
       {
         "type": "fakeip",
         "tag": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
-      },
-      {
-        "type": "hosts",
-        "tag": "hosts",
-        "predefined": { "adgh.7773000.xyz": [ "182.92.122.107", "2408:400a:6e:ba00:648c:4e22:f1d7:1d30" ] } }
+        "inet4_range": "198.18.0.0/15"
+      }
     ],
     "rules": [
       { "query_type": "HTTPS",  "action": "reject" },
@@ -111,9 +106,9 @@
       "tag": "tun-in",
       "interface_name": "singbox",
       "address": [
-        "172.19.0.0/30"
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 1500,
       "auto_route": true,
       "strict_route": true,
       "route_exclude_address": [ "192.168.0.0/16", "fc00::/7" ],
