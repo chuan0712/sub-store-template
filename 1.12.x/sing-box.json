@@ -2,22 +2,41 @@
   "dns": {
     "servers": [
       {
-        "type": "udp",
+        "type": "https",
         "tag": "mosdns",
-        "server": "182.92.122.107",
-        "server_port": 1053
+        "server": "adgh.7773000.xyz",
+        "domain_resolver": "hosts"
       },
       {
         "type": "fakeip",
         "tag": "fakeip",
         "inet4_range": "198.18.0.0/15",
         "inet6_range": "fc00::/18"
+      },
+      {
+        "type": "hosts",
+        "tag": "hosts",
+        "predefined": {
+          "adgh.7773000.xyz": [
+            "182.92.122.107",
+            "2408:400a:6e:ba00:648c:4e22:f1d7:1d30"
+          ]
+        }
       }
+
     ],
     "rules": [
       { "clash_mode": "Direct", "server": "mosdns" },
       { "clash_mode": "Global", "server": "fakeip" },
-      { "query_type": "HTTPS",  "action": "reject" },
+      {
+        "rule_set": [
+          "cn_domain",
+          "microsoft@cn_domain"
+        ],
+        "action": "route",
+        "server": "mosdns"
+      },
+      { "query_type": "HTTPS", "action": "reject" },
       { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 0 }
     ],
     "final": "mosdns",
