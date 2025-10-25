@@ -4,7 +4,8 @@
       {
         "type": "https",
         "tag": "mosdns",
-        "server": "adgh.7773000.xyz",
+        "server": "mosdns.7773000.xyz",
+        "path": "/api/dns",
         "domain_resolver": "hosts"
       },
       {
@@ -17,7 +18,7 @@
         "type": "hosts",
         "tag": "hosts",
         "predefined": {
-          "adgh.7773000.xyz": [
+          "mosdns.7773000.xyz": [
             "182.92.122.107",
             "2408:400a:6e:ba00:648c:4e22:f1d7:1d30"
           ]
@@ -29,10 +30,7 @@
       { "clash_mode": "Direct", "server": "mosdns" },
       { "clash_mode": "Global", "server": "fakeip" },
       {
-        "rule_set": [
-          "cn_domain",
-          "microsoft@cn_domain"
-        ],
+        "rule_set": [ "cn_domain" ],
         "action": "route",
         "server": "mosdns"
       },
@@ -51,15 +49,17 @@
       { "type": "logical", "mode": "or", "rules": [ { "port": 853 }, { "network": "udp", "port": 443 }, { "protocol": "stun" } ], "action": "reject" },
       { "clash_mode": "Global",              "outbound": "GLOBAL" },
       { "clash_mode": "Direct",              "outbound": "direct" },
+      { "domain_suffix":"7773000.xyz",       "outbound": "direct" },
+      { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "rule_set": "games@cn_domain",       "outbound": "direct" },
       { "rule_set": "googlefcm_domain",      "outbound": "direct" },
       { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
       { "rule_set": "category-ai-!cn_domain","outbound": "🇺🇸 美国" },
       { "rule_set": "youtube_domain",        "outbound": "🇺🇸 美国" },
+      { "rule_set": "twitter_domain",        "outbound": "🇺🇸 美国" },
       { "rule_set": "tiktok_domain",         "outbound": "🇺🇸 美国" },
       { "rule_set": "github_domain",         "outbound": "🇸🇬 狮城" },
       { "rule_set": "onedrive_domain",       "outbound": "☁️ 微软云盘" },
-      { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "🇸🇬 狮城" },
       { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" },
@@ -72,6 +72,7 @@
       { "type": "remote", "tag": "microsoft@cn_domain",   "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs" },
       { "type": "remote", "tag": "category-ai-!cn_domain","download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs" },
       { "type": "remote", "tag": "youtube_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
+      { "type": "remote", "tag": "twitter_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/twitter.srs" },
       { "type": "remote", "tag": "tiktok_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
       { "type": "remote", "tag": "github_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs" },
       { "type": "remote", "tag": "onedrive_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
@@ -88,14 +89,6 @@
       "tag": "direct",
       "type": "direct"
     },
-    { "tag": "✈️ 节点总览", "type": "selector", "outbounds": [] },
-    { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
-    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "direct" },
-    {
-      "tag": "GLOBAL",
-      "type": "selector",
-      "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港"
-    },
     {
       "tag": "🇭🇰 香港", "type": "urltest", "outbounds": []
     },
@@ -104,6 +97,14 @@
     },
     {
       "tag": "🇺🇸 美国", "type": "urltest", "outbounds": []
+    },
+    { "tag": "✈️ 节点总览", "type": "selector", "outbounds": [] },
+    { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
+    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "direct" },
+    {
+      "tag": "GLOBAL",
+      "type": "selector",
+      "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港"
     }
   ],
 
@@ -136,7 +137,7 @@
     "clash_api": {
       "external_controller": "0.0.0.0:9090",
       "external_ui": "ui",
-      "external_ui_download_url": "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_url": "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist-misans-only.zip",
       "external_ui_download_detour": "direct"
     },
     "cache_file": {
