@@ -1,0 +1,144 @@
+{
+  "dns": {
+    "servers": [
+      {
+        "type": "https",
+        "tag": "mosdns",
+        "server": "dns.7773000.xyz",
+        "path": "/api/dns-query",
+        "domain_resolver": "hosts"
+      },
+      {
+        "type": "fakeip",
+        "tag": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      },
+      {
+        "type": "hosts",
+        "tag": "hosts",
+        "predefined": {
+          "dns.7773000.xyz": [
+            "182.92.122.107",
+            "2408:400a:6e:ba00:648c:4e22:f1d7:1d30"
+          ]
+        }
+      }
+
+    ],
+    "rules": [
+      { "clash_mode": "Direct", "server": "mosdns" },
+      { "clash_mode": "Global", "server": "fakeip" },
+      {
+        "rule_set": [ "cn_domain" ],
+        "action": "route",
+        "server": "mosdns"
+      },
+      { "query_type": [ "HTTPS", "SVCB" ], "action": "reject" },
+      { "query_type": [ "A", "AAAA" ], "server": "fakeip", "rewrite_ttl": 0 }
+    ],
+    "final": "mosdns",
+    "independent_cache": true
+  },
+
+  "route": {
+    "rules": [
+      { "action": "sniff" },
+      { "type": "logical", "mode": "or", "rules": [ { "port": 53  }, { "protocol": "dns" } ], "action": "hijack-dns" },
+      { "ip_is_private": true, "outbound": "direct" },
+      { "clash_mode": "Global",              "outbound": "GLOBAL" },
+      { "clash_mode": "Direct",              "outbound": "direct" },
+      { "rule_set": "games@cn_domain",       "outbound": "direct" },
+      { "rule_set": "googlefcm_domain",      "outbound": "direct" },
+      { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
+      { "rule_set": "category-ai-!cn_domain","outbound": "🇺🇸 美国" },
+      { "rule_set": "youtube_domain",        "outbound": "🇺🇸 美国" },
+      { "rule_set": "twitter_domain",        "outbound": "🇺🇸 美国" },
+      { "rule_set": "tiktok_domain",         "outbound": "🇺🇸 美国" },
+      { "rule_set": "github_domain",         "outbound": "🇸🇬 狮城" },
+      { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
+      { "rule_set": "onedrive_domain",       "outbound": "☁️ 微软云盘" },
+      { "action": "resolve" },
+      { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "🇸🇬 狮城" },
+      { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" }
+    ],
+    "rule_set": [
+      { "type": "remote", "tag": "cn_domain",             "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
+      { "type": "remote", "tag": "games@cn_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs" },
+      { "type": "remote", "tag": "googlefcm_domain",      "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs" },
+      { "type": "remote", "tag": "microsoft@cn_domain",   "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs" },
+      { "type": "remote", "tag": "category-ai-!cn_domain","download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs" },
+      { "type": "remote", "tag": "youtube_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
+      { "type": "remote", "tag": "twitter_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/twitter.srs" },
+      { "type": "remote", "tag": "tiktok_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs"  },
+      { "type": "remote", "tag": "github_domain",         "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs"  },
+      { "type": "remote", "tag": "onedrive_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
+      { "type": "remote", "tag": "telegram_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
+      { "type": "remote", "tag": "telegram_ip",           "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
+      { "type": "remote", "tag": "cn_ip",                 "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
+    ],
+    "final": "🔗 默认代理",
+    "default_domain_resolver": "mosdns",
+    "auto_detect_interface": true
+  },
+  "outbounds": [
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "🇭🇰 香港", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇸🇬 狮城", "type": "urltest", "outbounds": []
+    },
+    {
+      "tag": "🇺🇸 美国", "type": "urltest", "outbounds": []
+    },
+    { "tag": "✈️ 节点总览", "type": "selector", "outbounds": [] },
+    { "tag": "🔗 默认代理", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港" },
+    { "tag": "☁️ 微软云盘", "type": "selector", "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "direct" },
+    {
+      "tag": "GLOBAL",
+      "type": "selector",
+      "outbounds": [ "direct", "🇭🇰 香港", "🇸🇬 狮城", "🇺🇸 美国" ], "default": "🇭🇰 香港"
+    }
+  ],
+
+  "log": {
+    "disabled": false,
+    "level": "error",
+    "output": "box.log",
+    "timestamp": true
+  },
+
+  "inbounds": [
+    { "type": "mixed", "listen": "::", "listen_port": 7890, "set_system_proxy": true },
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "singbox",
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "strict_route": true,
+      "route_exclude_address": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "fc00::/7", "fe80::/10" ]
+    }
+  ],
+
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "ui",
+      "external_ui_download_url": "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist-misans-only.zip",
+      "external_ui_download_detour": "direct"
+    },
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true,
+      "store_rdrc": true
+    }
+  }
+}
