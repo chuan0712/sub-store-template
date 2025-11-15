@@ -53,13 +53,13 @@
       { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
       { "rule_set": "category-ai-!cn_domain","outbound": "🇺🇸 美国" },
       { "rule_set": "youtube_domain",        "outbound": "🇺🇸 美国" },
-      { "rule_set": "twitter_domain",        "outbound": "🇺🇸 美国" },
       { "rule_set": "tiktok_domain",         "outbound": "🇺🇸 美国" },
       { "rule_set": "github_domain",         "outbound": "🇸🇬 狮城" },
       { "domain_suffix":"googleapis.cn",     "outbound": "🔗 默认代理" },
       { "rule_set": "onedrive_domain",       "outbound": "☁️ 微软云盘" },
       { "action": "resolve" },
       { "rule_set": [ "telegram_ip", "telegram_domain" ], "outbound": "🇸🇬 狮城" },
+      { "rule_set": [ "twitter_ip", "twitter_domain" ],   "outbound": "🇺🇸 美国" },
       { "rule_set": [ "cn_ip", "cn_domain" ], "outbound": "direct" }
     ],
     "rule_set": [
@@ -75,6 +75,7 @@
       { "type": "remote", "tag": "onedrive_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs" },
       { "type": "remote", "tag": "telegram_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
       { "type": "remote", "tag": "telegram_ip",           "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
+      { "type": "remote", "tag": "twitter_ip",            "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/twitter.srs" },
       { "type": "remote", "tag": "cn_ip",                 "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
     ],
     "final": "🔗 默认代理",
