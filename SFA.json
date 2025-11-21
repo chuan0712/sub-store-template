@@ -5,7 +5,7 @@
         "type": "https",
         "tag": "mosdns",
         "server": "dns.7773000.xyz",
-        "path": "/api/dns-query",
+        "path": "/api-query",
         "domain_resolver": "hosts"
       },
       {

@@ -5,7 +5,7 @@
         "type": "https",
         "tag": "mosdns",
         "server": "dns.7773000.xyz",
-        "path": "/api/dns-query",
+        "path": "/api-query",
         "domain_resolver": "hosts"
       },
       {
@@ -79,6 +79,7 @@
       { "type": "remote", "tag": "cn_ip",                 "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" }
     ],
     "final": "🔗 默认代理",
+    "find_process": true,
     "default_domain_resolver": "mosdns",
     "auto_detect_interface": true
   },
