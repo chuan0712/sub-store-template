@@ -30,12 +30,12 @@
       { "clash_mode": "Direct", "server": "mosdns" },
       { "clash_mode": "Global", "server": "fakeip" },
       {
-        "rule_set": [ "cn_domain" ],
-        "action": "route",
+        "domain_suffix": [ "lancache.steamcontent.com", "market.xiaomi.com" ],
+        "rule_set": [ "cn_domain", "private_domain", "googlefcm_domain" ],
         "server": "mosdns"
       },
       { "query_type": [ "HTTPS", "SVCB" ], "action": "reject" },
-      { "query_type": [ "A", "AAAA" ], "server": "fakeip", "rewrite_ttl": 0 }
+      { "query_type": [ "A", "AAAA" ], "server": "fakeip" }
     ],
     "final": "mosdns",
     "independent_cache": true
@@ -48,6 +48,7 @@
       { "ip_is_private": true, "outbound": "direct" },
       { "clash_mode": "Global",              "outbound": "GLOBAL" },
       { "clash_mode": "Direct",              "outbound": "direct" },
+      { "rule_set": "private_domain",        "outbound": "direct" },
       { "rule_set": "games@cn_domain",       "outbound": "direct" },
       { "rule_set": "googlefcm_domain",      "outbound": "direct" },
       { "rule_set": "microsoft@cn_domain",   "outbound": "direct" },
@@ -64,6 +65,7 @@
     ],
     "rule_set": [
       { "type": "remote", "tag": "cn_domain",             "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
+      { "type": "remote", "tag": "private_domain",        "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs" },
       { "type": "remote", "tag": "games@cn_domain",       "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs" },
       { "type": "remote", "tag": "googlefcm_domain",      "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs" },
       { "type": "remote", "tag": "microsoft@cn_domain",   "download_detour": "direct", "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft@cn.srs" },
