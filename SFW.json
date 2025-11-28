@@ -31,7 +31,7 @@
       { "clash_mode": "Global", "server": "fakeip" },
       {
         "domain_suffix": [ "lancache.steamcontent.com", "market.xiaomi.com" ],
-        "rule_set": [ "cn_domain", "private_domain", "googlefcm_domain" ],
+        "rule_set": [ "cn_domain", "private_domain" ],
         "server": "mosdns"
       },
       { "query_type": [ "HTTPS", "SVCB" ], "action": "reject" },
